@@ -43,7 +43,7 @@
 #			- Jamf Pro
 #			- Jamf Pro API User with permission to read computer objects
 #			- Jamf Pro API User with permission to send management commands
-#           - Script must be executed as root (due to profiles command)
+#           		- Script must be executed as root (due to profiles command)
 #
 # EXIT CODES:
 #			0 - Everything is Successful
