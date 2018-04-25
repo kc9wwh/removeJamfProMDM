@@ -30,20 +30,22 @@
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #
-# This script was designed to be used when migration Jamf Pro instances where an MDM profile
-# is installed on the systems and needs to be removed prior to the migration.
+# This script was designed to be used to completely remove the device from Jamf Pro and all
+# associated profiles and agent(s).
 #
 # To accomplish this the following will be performed:
 #			- Attempt removal via Jamf binary
 #			- Attempt removal via Jamf API sending an MDM UnmanageDevice command
 #			- Lastly, if failed to remove MDM Profile the /var/db/ConfigurationProfiles
 #             folder will be renamed.
+#           - ADDED: If MDM Profile remove is successful, removeFramework and delete Jamf Pro record
 #
 # REQUIREMENTS:
 #			- Jamf Pro
 #			- Jamf Pro API User with permission to read computer objects
+#			- Jamf Pro API User with permission to delete computer objects
 #			- Jamf Pro API User with permission to send management commands
-#           		- Script must be executed as root (due to profiles command)
+#           - Script must be executed as root (due to profiles command)
 #
 # EXIT CODES:
 #			0 - Everything is Successful
@@ -55,7 +57,7 @@
 # Written by: Joshua Roskos | Professional Services Engineer | Jamf
 #
 # Created On: December 7th, 2017
-# Updated On: December 7th, 2017
+# Updated On: April 25th, 2018
 #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -64,7 +66,7 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 jamfProURL=""                       # URL of the Jamf Pro server (ie. https://jamf.acme.com:8443)
-apiUser=""                          # API user account in Jamf Pro w/ Update permission
+apiUser=""                          # API user account in Jamf Pro
 apiPass=""                          # Password for above API user account
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -148,6 +150,13 @@ else
         fi
     fi
 fi
+
+## Remove Jamf Binary
+/usr/local/bin/jamf removeFramework
+
+## Delete Computer Inventory Record
+## Comment out the below line if you do not want the inventory record removed from Jamf Pro
+/usr/bin/curl -s -X DELETE -H "Content-Type: text/xml" -u ${apiUser}:${apiPass} ${jamfProURL}/JSSResource/computers/id/${jamfProCompID}
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # CLEANUP & EXIT
