@@ -34,22 +34,22 @@
 # associated profiles and agent(s).
 #
 # To accomplish this the following will be performed:
-#			- Attempt removal via Jamf binary
-#			- Attempt removal via Jamf API sending an MDM UnmanageDevice command
-#			- Lastly, if failed to remove MDM Profile the /var/db/ConfigurationProfiles
+#           - Attempt removal via Jamf binary
+#           - Attempt removal via Jamf API sending an MDM UnmanageDevice command
+#           - Lastly, if failed to remove MDM Profile the /var/db/ConfigurationProfiles
 #             folder will be renamed.
 #           - ADDED: If MDM Profile remove is successful, removeFramework and delete Jamf Pro record
 #
 # REQUIREMENTS:
-#			- Jamf Pro
-#			- Jamf Pro API User with permission to read computer objects
-#			- Jamf Pro API User with permission to delete computer objects
-#			- Jamf Pro API User with permission to send management commands
+#           - Jamf Pro
+#           - Jamf Pro API User with permission to read computer objects
+#           - Jamf Pro API User with permission to delete computer objects
+#           - Jamf Pro API User with permission to send management commands
 #           - Script must be executed as root (due to profiles command)
 #
 # EXIT CODES:
-#			0 - Everything is Successful
-#			1 - Unable to remove MDM Profile
+#           0 - Everything is Successful
+#           1 - Unable to remove MDM Profile
 #
 # For more information, visit https://github.com/kc9wwh/removeJamfProMDM
 #
