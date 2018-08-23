@@ -2,7 +2,7 @@
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #
-# Copyright (c) 2017 Jamf.  All rights reserved.
+# Copyright (c) 2018 Jamf.  All rights reserved.
 #
 #       Redistribution and use in source and binary forms, with or without
 #       modification, are permitted provided that the following conditions are met:
@@ -55,7 +55,7 @@
 # Written by: Joshua Roskos | Professional Services Engineer | Jamf
 #
 # Created On: December 7th, 2017
-# Updated On: December 7th, 2017
+# Updated On: August 23rd, 2018
 #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -74,7 +74,7 @@ apiPass=""                          # Password for above API user account
 osMinorVersion=$( /usr/bin/sw_vers -productVersion | /usr/bin/cut -d. -f2 )
 timestamp=$( /bin/date '+%Y-%m-%d-%H-%M-%S' )
 mySerial=$( system_profiler SPHardwareDataType | grep Serial |  awk '{print $NF}' )
-jamfProCompID=$( /usr/bin/curl -s -u ${apiUser}:${apiPass} ${jamfProURL}/JSSResource/computers/serialnumber/${mySerial}/subset/general | /usr/bin/xpath "//computer/general/id/text()" )
+jamfProCompID=$( /usr/bin/curl -s -u ${apiUser}:${apiPass} -H "Accept: text/xml" ${jamfProURL}/JSSResource/computers/serialnumber/${mySerial}/subset/general | /usr/bin/xpath "//computer/general/id/text()" )
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # FUNCTIONS
